@@ -36,12 +36,26 @@
     })
    }
   }
+
   const displayNotesinDom=(id,note)=>{
      outputSub.innerHTML += `
         <li class="text-center" id="note-${id}">${note}<button onclick="save(id)" class="btn btn-success rounded-2 ms-2 w-25">Save</button></li> 
       `
   }
   setNotes()
+  
+    const setNotesSetn = () => {
+      const sessionStorageItm = sessionStorage.getItem("notes")
+      const bn = JSON.parse(sessionStorageItm)
+      if(bn){
+
+        bn.map(itm => {
+  
+          displayNotesinDom(itm.id, itm.note)
+        })
+      }
+    }
+    setNotesSetn()
   const locarr=[]
   const setnArr=[]
   let noteId=0
@@ -51,14 +65,8 @@
       let note = { id: noteId, note: input.value }
       setnArr.push(note)
       sessionStorage.setItem("notes",JSON.stringify(setnArr))
-
-      const sessionStorageItm=sessionStorage.getItem("notes")
-      const bn= JSON.parse(sessionStorageItm)
-
-      bn.map(itm=>{
-
-        displayNotesinDom(itm.id,itm.note)
-      })
+     
+      displayNotesinDom(noteId, input.value)
       
     }
     
